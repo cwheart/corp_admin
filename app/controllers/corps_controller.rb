@@ -113,7 +113,7 @@ class CorpsController < ApplicationController
       scopes << { d101a: true } if params[:d101a]
       scopes << { d110t: true } if params[:d110t]
       scopes << { d110a: true } if params[:d110a]
-      scopes = [{d101t: '12332'}] if scopes.blank?
+      scopes = [{no: '123'}] if scopes.blank?
       @corps = @corps.or(scopes)
 
       if params[:blacklist]
