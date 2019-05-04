@@ -11,44 +11,36 @@
         <td></td>
       </tr>
       <tr>
-        <th>注册地</th>
-        <td><%= @corp.legal_person %></td>
-        <th>注册资本</th>
-        <td><%= @corp.legal_person %></td>
-        <th>企业登记注册类型</th>
-        <td><%= @corp.legal_person %></td>
-      </tr>
-      <tr>
+        <th>企业资质资格列表</th>
+        <td><%= @corp.scopes %></td>
         <th>股东数量</th>
-        <td></td>
-        <th></th>
-        <td></td>
+        <td><%= Shareholder.where(corp_no: @corp.no).count %></td>
         <th>企业经营地址</th>
         <td></td>
       </tr>
       <tr>
-        <th>成立时间</th>
-        <td></td>
-        <th>邮箱</th>
-        <td></td>
-        <th>电话</th>
-        <td></td>
+        <th>注册地</th>
+        <td><%= @corp.address %></td>
+        <th>注册资本</th>
+        <td><%= @corp.regcaption %></td>
+        <th>企业登记注册类型</th>
+        <td><%= @corp.corp_type %></td>
       </tr>
       <tr>
-        <th>企业资质资格列表</th>
-        <td colspan=5>1111</td>
+        <th>成立时间</th>
+        <td><%= @corp. %></td>
+        <th>邮箱</th>
+        <td><%= @corp.email %></td>
+        <th>电话</th>
+        <td><%= @corp.phone %></td>
       </tr>
       <tr>
         <th>主要股东</th>
-        <td colspan=5></td>
-      </tr>
-      <tr>
+        <td><%= Shareholder.where(corp_no: @corp.no ).map(&:name).join('/') %></td>
         <th>经营风险</th>
-        <td colspan=5></td>
-      </tr>
-      <tr>
+        <td><%= AbnormalOperation.where(corp_no: @corp.no ).count %></td>
         <th>司法风险</th>
-        <td colspan=5></td>
+        <td><%= @corp.doc_count %></td>
       </tr>
     </table>
   </td>

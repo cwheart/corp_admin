@@ -21,4 +21,13 @@ class Corp
   field :d101t, type: Boolean
   field :d110a, type: Boolean
   field :d110t, type: Boolean
+
+  def scopes
+    result = []
+    d101t << '房建特级' if d101t
+    d101a << '房建一级' if d101a
+    d110t << '市政特级' if d110t
+    d110a << '市政一级' if d110a
+    result.join('/')
+  end
 end
