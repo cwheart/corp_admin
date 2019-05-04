@@ -10,6 +10,6 @@ class BlackListItem
     pipeline = [
         {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
     ]
-    BlackListItem.collections.aggregate(pipeline)
+    BlackListItem.collection.aggregate(pipeline)
   end
 end

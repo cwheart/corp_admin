@@ -12,6 +12,6 @@ class AbnormalOperation
     pipeline = [
         {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
     ]
-    AbnormalOperation.collections.aggregate(pipeline)
+    AbnormalOperation.collection.aggregate(pipeline)
   end
 end
