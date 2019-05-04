@@ -11,6 +11,33 @@ class CorpsController < ApplicationController
   # GET /corps/1
   # GET /corps/1.json
   def show
+    black_lists = {}
+    BlackListItem.data.each do |item|
+      black_lists[item['_id']] ||= 0
+      black_lists[item['_id']] += item['count']
+    end
+    # 行政处罚
+    AdministrativePunish.data.each do |item|
+      black_lists[item['_id']] ||= 0
+      black_lists[item['_id']] += item['count']
+    end
+    # 经营异常
+    AbnormalOperation.data.each do |item|
+      black_lists[item['_id']] ||= 0
+      black_lists[item['_id']] += item['count']
+    end
+
+    punishe_list = AdministrativePunish.data.values.to_h
+    manage_list = AbnormalOperation.data.values.to_h
+    bid_list = BidItem.latest_two_years_data.values.to_h
+    win_bid_list = BidItem.latest_six_months_data.values.to_h
+
+    @blacklist_count = black_lists[@corp.no] || 0
+    @punishe_count = punishe_list[@corp.no] || 0
+    @manage_risk_count = [@corp.no] || 0
+    @law_rist_count = @corp.doc_count
+    @bid_count = bid_list[@corp.no] || 0
+    @win_bid_count = win_bid_list[@corp.no] || 0
   end
 
   def export
@@ -19,13 +46,34 @@ class CorpsController < ApplicationController
     sheet = book.create_worksheet
     sheet.row(0).concat %w{企业名称 企业统一信用代码 法人 邮箱 电话 注册资本 成立日期 黑名单数量 行政处罚 工商异常数量 法院诉讼数量 近半年投标 近两年中标}
 
+    black_lists = {}
+    BlackListItem.data.each do |item|
+      black_lists[item['_id']] ||= 0
+      black_lists[item['_id']] += item['count']
+    end
+    # 行政处罚
+    AdministrativePunish.data.each do |item|
+      black_lists[item['_id']] ||= 0
+      black_lists[item['_id']] += item['count']
+    end
+    # 经营异常
+    AbnormalOperation.data.each do |item|
+      black_lists[item['_id']] ||= 0
+      black_lists[item['_id']] += item['count']
+    end
+
+    punishe_list = AdministrativePunish.data.values.to_h
+    manage_list = AbnormalOperation.data.values.to_h
+    bid_list = BidItem.latest_two_years_data.values.to_h
+    win_bid_list = BidItem.latest_six_months_data.values.to_h
+
     @corps.each_with_index do |corp, index|
-      blacklist_count = 0
-      punishe_count = 0
-      manage_risk_count = 0 
-      law_rist_count = 0
-      bid_count = 0
-      win_bid_count = 0
+      blacklist_count = black_lists[corp.no] || 0
+      punishe_count = punishe_list[corp.no] || 0
+      manage_risk_count = [corp.no] || 0
+      law_rist_count = corp.doc_count
+      bid_count = bid_list[corp.no] || 0
+      win_bid_count = win_bid_list[corp.no] || 0
       row = sheet.row(index + 1)
       row.push corp.name
       row.push corp.no

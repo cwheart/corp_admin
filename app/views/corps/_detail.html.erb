@@ -16,7 +16,7 @@
         <th>股东数量</th>
         <td><%= Shareholder.where(corp_no: @corp.no).count %></td>
         <th>企业经营地址</th>
-        <td></td>
+        <td><%= @corp.address %></td>
       </tr>
       <tr>
         <th>注册地</th>
@@ -27,6 +27,14 @@
         <td><%= @corp.corp_type %></td>
       </tr>
       <tr>
+        <th>主要股东</th>
+        <td><%= Shareholder.where(corp_no: @corp.no ).map(&:name).join('/') %></td>
+        <th></th>
+        <td></td>
+        <th></th>
+        <td></td>
+      </tr>
+      <tr>
         <th>成立时间</th>
         <td><%= @corp.est_date %></td>
         <th>邮箱</th>
@@ -35,12 +43,20 @@
         <td><%= @corp.phone %></td>
       </tr>
       <tr>
-        <th>主要股东</th>
-        <td><%= Shareholder.where(corp_no: @corp.no ).map(&:name).join('/') %></td>
+        <th>黑名单数量</th>
+        <td><%= @blacklist_count %></td>
+        <th>行政处罚</th>
+        <td><%= @punishe_count %></td>
         <th>经营风险</th>
-        <td><%= AbnormalOperation.where(corp_no: @corp.no ).count %></td>
+        <td><%= @manage_risk_count %></td>
+      </tr>
+      <tr>
         <th>司法风险</th>
-        <td><%= @corp.doc_count %></td>
+        <td><%= law_rist_count %></td>
+        <th>近两年中标数量</th>
+        <td><%= @win_bid_count %></td>
+        <th>半年内招投标数量</th>
+        <td><%= @bid_count %></td>
       </tr>
     </table>
   </td>

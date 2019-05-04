@@ -9,6 +9,24 @@ class BidItem
   field :title, type: String
   field :channel, type: String
 
+  def latest_two_years_data
+    begin_time = 2.years.ago
+    pipeline = [
+        {'$match': {'channel': '中标公告', 'published_at': {'$gt': begin_time} } },
+        {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
+    ]
+    BidItem.collection.aggregate(pipeline)
+  end
+
+  def latest_six_months_data
+   begin_time = 6.months.ago
+    pipeline = [
+        {'$match': {'channel': '招标公告', 'published_at': {'$gt': begin_time} } },
+        {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
+    ]
+    BidItem.collection.aggregate(pipeline)
+  end
+
   # 近两年中标数量小于3个
   def self.latest_two_years
     begin_time = 2.years.ago
