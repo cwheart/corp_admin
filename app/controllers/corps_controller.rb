@@ -27,10 +27,10 @@ class CorpsController < ApplicationController
       black_lists[item['_id']] += item['count']
     end
 
-    punishe_list = AdministrativePunish.data.values.to_h
-    manage_list = AbnormalOperation.data.values.to_h
-    bid_list = BidItem.latest_two_years_data.values.to_h
-    win_bid_list = BidItem.latest_six_months_data.values.to_h
+    punishe_list = AdministrativePunish.data.map(&:values).to_h
+    manage_list = AbnormalOperation.data.map(&:values).to_h
+    bid_list = BidItem.latest_two_years_data.map(&:values).to_h
+    win_bid_list = BidItem.latest_six_months_data.map(&:values).to_h
 
     @blacklist_count = black_lists[@corp.no] || 0
     @punishe_count = punishe_list[@corp.no] || 0
@@ -62,10 +62,10 @@ class CorpsController < ApplicationController
       black_lists[item['_id']] += item['count']
     end
 
-    punishe_list = AdministrativePunish.data.values.to_h
-    manage_list = AbnormalOperation.data.values.to_h
-    bid_list = BidItem.latest_two_years_data.values.to_h
-    win_bid_list = BidItem.latest_six_months_data.values.to_h
+    punishe_list = AdministrativePunish.data.map(&:values).to_h
+    manage_list = AbnormalOperation.data.map(&:values).to_h
+    bid_list = BidItem.latest_two_years_data.map(&:values).to_h
+    win_bid_list = BidItem.latest_six_months_data.map(&:values).to_h
 
     @corps.each_with_index do |corp, index|
       blacklist_count = black_lists[corp.no] || 0
