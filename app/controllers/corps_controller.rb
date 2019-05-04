@@ -34,7 +34,7 @@ class CorpsController < ApplicationController
 
     @blacklist_count = black_lists[@corp.no] || 0
     @punishe_count = punishe_list[@corp.no] || 0
-    @manage_risk_count = [@corp.no] || 0
+    @manage_risk_count = manage_list[@corp.no] || 0
     @law_rist_count = @corp.doc_count
     @bid_count = bid_list[@corp.no] || 0
     @win_bid_count = win_bid_list[@corp.no] || 0
