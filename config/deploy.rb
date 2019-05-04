@@ -40,3 +40,6 @@ set :repo_url, "git@github.com:cwheart/corp_admin.git"
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+set :chruby_ruby, 'ruby-2.6.3'
+
