@@ -32,6 +32,9 @@ gem 'mongoid', '~> 7.0'
 
 gem "roo", "~> 2.8.0"
 
+gem 'kaminari'
+gem 'kaminari-mongoid'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

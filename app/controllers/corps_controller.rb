@@ -30,7 +30,6 @@ class CorpsController < ApplicationController
         black_lists[item['_id']] += item['count']
       end
       black_lists.select{|k, v| v >= 10 }.keys
-      @corps = @corps.
       @corps = @corps.where(no: {'$nin': black_lists.values }).first
     end
 
@@ -46,6 +45,8 @@ class CorpsController < ApplicationController
     if params[:bid]
       @corps.where(no: { '$nin': BidItem.suit_nos })
     end
+
+    @corps = @corps.page(params[:page]).per(50)
   end
 
   # GET /corps/1
