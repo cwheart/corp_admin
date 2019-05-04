@@ -87,5 +87,12 @@ $(function() {
   $("#export").click(function() {
     window.open("<%= export_corps_path %>?" + $("form").serialize());
   });
+  $("tr td a").click(function() {
+    if($(this).hasClass('current')) {
+      $(this).parent().parent().next().remove();
+      $(this).removeClass('current');
+      return false;
+    }
+  })
 });
 </script>

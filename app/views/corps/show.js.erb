@@ -1,2 +1,3 @@
 $(".detail").remove();
 $("#item_<%= @corp.id %>").after("<%= j render('detail') %>")
+$("#item_<%= @corp.id %> a").addClass('current');
