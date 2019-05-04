@@ -31,4 +31,4 @@
 /config/master.key
 public/exports/*.csv
 config/puma.rb
-
+mongoid.*.yml
