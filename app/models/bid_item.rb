@@ -9,7 +9,7 @@ class BidItem
   field :title, type: String
   field :channel, type: String
 
-  def latest_two_years_data
+  def self.latest_two_years_data
     begin_time = 2.years.ago
     pipeline = [
         {'$match': {'channel': '中标公告', 'published_at': {'$gt': begin_time} } },
@@ -18,7 +18,7 @@ class BidItem
     BidItem.collection.aggregate(pipeline)
   end
 
-  def latest_six_months_data
+  def self.latest_six_months_data
    begin_time = 6.months.ago
     pipeline = [
         {'$match': {'channel': '招标公告', 'published_at': {'$gt': begin_time} } },
