@@ -1,0 +1,40 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *= require bootstrap.min
+ *= require_self
+ */
+
+.search-form label {
+  width: 60px;
+  text-align: right;
+}
+
+.search-form .filter {
+  margin-top: -20px;
+  padding-left: 80px;
+}
+
+.search-form .actions {
+  text-align: right;;
+}
+
+.detail-table tr th {
+  text-align:  left;
+}
+
+.detail-table tr td {
+  text-align:  left;
+}
+
+.form-check {
+  padding-left: 0px;
+}

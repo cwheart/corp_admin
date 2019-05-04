@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  corp_id: MyString
+  corp_no: MyString
+  bid_id: MyString
+  published_at: 
+  title: MyString
+  channel: MyString
+
+two:
+  corp_id: MyString
+  corp_no: MyString
+  bid_id: MyString
+  published_at: 
+  title: MyString
+  channel: MyString

@@ -1,0 +1,27 @@
+<%= form_with(model: corp, local: true) do |form| %>
+  <% if corp.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(corp.errors.count, "error") %> prohibited this corp from being saved:</h2>
+
+      <ul>
+      <% corp.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :no %>
+    <%= form.text_field :no %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

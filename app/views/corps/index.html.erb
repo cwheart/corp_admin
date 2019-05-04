@@ -1,0 +1,88 @@
+<%= form_tag '', method: 'get' do %>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">企业资质:</label>
+    <div class="col-sm-10">
+      <div class="form-check form-check-inline">
+        <%= check_box_tag 'd101a', true, params[:d101a], class: "form-check-input" %>
+        <label class="form-check-label" for="d101a">房建特级</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <%= check_box_tag 'd101t', true, params[:d101t], class: "form-check-input" %>
+        <label class="form-check-label" for="d101t">房建一级</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <%= check_box_tag 'd110t', true, params[:d110t], class: "form-check-input" %>
+        <label class="form-check-label" for="d110t">市政特级</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <%= check_box_tag 'd110t', true, params[:d110t], class: "form-check-input" %>
+        <label class="form-check-label" for="d110t">市政一级</label>
+      </div>
+    </div>
+
+    <label for="staticEmail" class="col-sm-2 col-form-label">过滤条件:</label>
+    <div class="col-sm-10">
+      <div class="form-check">
+        <%= check_box_tag 'blacklist', true, params[:blacklist] %>
+        <label class="form-check-label" for="blacklist">失信黑名单小于10</label>
+      </div>
+      <div class="form-check">
+        <%= check_box_tag 'manage', true, params[:manage] %>
+        <label class="form-check-label" for="manage">工商经营异常</label>
+      </div>
+      <div class="form-check">
+        <%= check_box_tag 'law', true, params[:law] %>
+        <label class="form-check-label" for="law">法院诉讼大于20</label>
+      </div>
+      <div class="form-check">
+        <%= check_box_tag 'bid', true, params[:bid] %>
+        <label class="form-check-label" for="bid">近两年中标数量小于3个或半年内没有招投标</label>
+      </div>
+      <div class="form-check">
+        <%= check_box_tag 'tax', true, params[:tax] %>
+        <label class="form-check-label" for="tax">近两年纳税额小于1000万</label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <%= submit_tag '查询', class: "btn btn-primary" %>
+      <%= button_tag '导出', class: "btn btn-primary", id: 'export' %>
+    </div>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>企业名称</th>
+      <th>信用代码</th>
+      <th>注册资本</th>
+      <th>成立时间</th>
+      <th>法人</th>
+      <th>注册地</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @corps.each_with_index do |corp, index| %>
+      <tr id="item_<%= corp.id %>">
+        <td><%= index + 1 %></td>
+        <td><%= link_to corp.name, corp, remote: true %></td>
+        <td><%= corp.no %></td>
+        <td><%= corp.regcaption.to_i %></td>
+        <td><%= corp.est_date %></td>
+        <td><%= corp.legal_person %></td>
+        <td><%= corp.area %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<script>
+$(function() {
+  $("#export").click(function() {
+    window.open("<%= export_corps_path %>?" + $("form").serialize());
+  });
+});
+</script>
