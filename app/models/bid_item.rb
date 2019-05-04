@@ -1,5 +1,7 @@
 class BidItem
   include Mongoid::Document
+  store_in collection: "bid_item"
+
   field :corp_id, type: BSON::ObjectId
   field :corp_no, type: String
   field :bid_id, type: BSON::ObjectId

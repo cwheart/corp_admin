@@ -1,8 +1,9 @@
 # 经营异常
 class AbnormalOperation
+  include Mongoid::Document
+  
   store_in collection: "abnormal_operation"
 
-  include Mongoid::Document
   field :corp_id, type: BSON::ObjectId
   field :corp_no, type: String
 

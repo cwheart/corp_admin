@@ -1,7 +1,8 @@
 # 行政处罚
 class AdministrativePunish
-  store_in collection: "administrative_punish"
   include Mongoid::Document
+  store_in collection: "administrative_punish"
+
   field :corp_id, type: BSON::ObjectId
   field :corp_no, type: String
 
