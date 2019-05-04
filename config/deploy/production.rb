@@ -20,7 +20,8 @@ server "59.110.229.47", user: "deploy", roles: %w{app db web}
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
-
+set :nginx_sites_available_path, "/etc/nginx/sites-available"
+set :nginx_sites_enabled_path, "/etc/nginx/sites-enabled"
 
 # Configuration
 # =============
