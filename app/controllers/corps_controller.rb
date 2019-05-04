@@ -116,7 +116,7 @@ class CorpsController < ApplicationController
       scopes = {d101t: '12332'} if scopes.blank?
       @corps = @corps.or(scopes)
 
-      if params[:black_list]
+      if params[:blacklist]
         # 黑名单
         black_lists = {}
         BlackListItem.data.each do |item|
@@ -140,7 +140,7 @@ class CorpsController < ApplicationController
       # 工商经营异常（即经营异常大于0）
       if params[:manage]
         nos = AbnormalOperation.data.select {|item| item['count'] > 0 }.map { |item| item['_id'] }
-        @corps.where(no: { '$in': nos}) 
+        @corps = @corps.where(no: { '$in': nos})
       end
 
       # 法院诉讼大于20个
