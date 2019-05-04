@@ -24,7 +24,7 @@ set :repo_url, "git@github.com:cwheart/corp_admin.git"
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/mongoid.yml", "config/master.ky"
+append :linked_files, "config/mongoid.yml", "config/master.key"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "public/exports"
