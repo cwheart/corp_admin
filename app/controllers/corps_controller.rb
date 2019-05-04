@@ -11,12 +11,41 @@ class CorpsController < ApplicationController
     scopes << { d110t: true } if params[:d110t]
     scopes << { d110a: true } if params[:d110a]
     @corps = @corps.or(scopes)
-    @corps.where('no.in': BidItem.suit_nos) if params[:bid]
-    @corps.where('no.in': BlackListItem.suit_nos) if params[:black_list]
-    @corps.where('no.in': AbnormalOperation.suit_nos) if params[:manage]
-    @corps.where('no.in': BlackListItem.suit_nos) if params[:law]
 
-    @corps = @corps.where('doc_count.gt': 20) if params[:law]
+    if params[:black_list]
+      # 黑名单
+      black_lists = {}
+      BlackListItem.data.each do |item|
+        black_lists[item['_id']] ||= 0
+        black_lists[item['_id']] += item['count']
+      end
+      # 行政处罚
+      AdministrativePunish.data.each do |item|
+        black_lists[item['_id']] ||= 0
+        black_lists[item['_id']] += item['count']
+      end
+      # 经营异常
+      AbnormalOperation.data.each do |item|
+        black_lists[item['_id']] ||= 0
+        black_lists[item['_id']] += item['count']
+      end
+      black_lists.select{|k, v| v >= 10 }.keys
+      @corps = @corps.
+      @corps = @corps.where(no: {'$nin': black_lists.values }).first
+    end
+
+    # 工商经营异常（即经营异常大于0）
+    if params[:manage]
+      nos = AbnormalOperation.data.select {|item| item['count'] > 0 }.map { |item| item['_id'] }
+      @corps.where(no: { '$in': nos}) 
+    end
+
+    # 法院诉讼大于20个
+    @corps = @corps.where(doc_count: { '$gt': 20 }) if params[:law]
+
+    if params[:bid]
+      @corps.where(no: { '$nin': BidItem.suit_nos })
+    end
   end
 
   # GET /corps/1

@@ -13,8 +13,9 @@ class BidItem
   def self.latest_two_years
     begin_time = 2.years.ago
     pipeline = [
-        {'$match': {'channel': '中标公告', 'published_at': {'$gt': two_years_ago} } },
+        {'$match': {'channel': '中标公告', 'published_at': {'$gt': begin_time} } },
         {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
+        {'$match': {'count': { '$gt': 2 } }},
     ]
     BidItem.collection.aggregate(pipeline)
   end
@@ -25,11 +26,12 @@ class BidItem
     pipeline = [
         {'$match': {'channel': '招标公告', 'published_at': {'$gt': begin_time} } },
         {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
+        {'$match': {'count': { '$gt': 0 } }},
     ]
     BidItem.collection.aggregate(pipeline)
   end
 
   def self.suit_nos
-    []
+    latest_two_years.map {|item| item['_id']} &  latest_six_months.map {|item| item['_id']}
   end
 end

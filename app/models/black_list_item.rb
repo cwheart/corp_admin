@@ -7,14 +7,9 @@ class BlackListItem
 
   # 黑名单
   def self.data
-
     pipeline = [
         {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
     ]
     BlackListItem.collections.aggregate(pipeline)
-  end
-
-  def self.suit_nos
-
   end
 end

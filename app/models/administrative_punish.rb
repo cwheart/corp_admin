@@ -8,10 +8,9 @@ class AdministrativePunish
 
   # 黑名单
   def self.data
-
     pipeline = [
         {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
     ]
-    AdministrativePunish.collections.aggregate(pipeline)
+    AdministrativePunish.collection.aggregate(pipeline)
   end
 end
