@@ -29,10 +29,10 @@
       <tr>
         <th>主要股东</th>
         <td><%= Shareholder.where(corp_no: @corp.no ).map(&:name).join('/') %></td>
-        <th></th>
-        <td></td>
-        <th></th>
-        <td></td>
+        <th>纳税额</th>
+        <td>暂无数据</td>
+        <th>公司社保缴纳人数</th>
+        <td>暂无数据</td>
       </tr>
       <tr>
         <th>成立时间</th>
