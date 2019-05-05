@@ -11,27 +11,30 @@ class CorpsController < ApplicationController
   # GET /corps/1
   # GET /corps/1.json
   def show
-    black_lists = {}
-    BlackListItem.data.each do |item|
-      black_lists[item['_id']] ||= 0
-      black_lists[item['_id']] += item['count']
-    end
-    # 行政处罚
-    AdministrativePunish.data.each do |item|
-      black_lists[item['_id']] ||= 0
-      black_lists[item['_id']] += item['count']
-    end
-    # 经营异常
-    AbnormalOperation.data.each do |item|
-      black_lists[item['_id']] ||= 0
-      black_lists[item['_id']] += item['count']
-    end
-
+    blacks = BlackListItem.data.map(&:values).to_h
     punishe_list = AdministrativePunish.data.map(&:values).to_h
     manage_list = AbnormalOperation.data.map(&:values).to_h
     bid_list = BidItem.data.map(&:values).to_h
 
+    black_lists = {}
+    # 黑名单
+    blacks.each do |k, v|
+      black_lists[k] ||= 0
+      black_lists[k] += v
+    end
+    # 行政处罚
+    punishe_list.each do |k, v|
+      black_lists[k] ||= 0
+      black_lists[k] += v
+    end
+    # 经营异常
+    manage_list.each do |k, v|
+      black_lists[k] ||= 0
+      black_lists[k] += v
+    end
+
     @blacklist_count = black_lists[@corp.no] || 0
+    @black_count = blacks[@corp.no] || 0
     @punishe_count = punishe_list[@corp.no] || 0
     @manage_risk_count = manage_list[@corp.no] || 0
     @law_rist_count = @corp.doc_count
@@ -44,32 +47,35 @@ class CorpsController < ApplicationController
     sheet = book.create_worksheet
     sheet.row(0).concat %w{企业名称 企业统一信用代码 法人 邮箱 电话 注册资本 成立日期 黑名单数量 行政处罚 工商异常数量 法院诉讼数量 近半年投标 近两年中标}
 
-    black_lists = {}
-    BlackListItem.data.each do |item|
-      black_lists[item['_id']] ||= 0
-      black_lists[item['_id']] += item['count']
-    end
-    # 行政处罚
-    AdministrativePunish.data.each do |item|
-      black_lists[item['_id']] ||= 0
-      black_lists[item['_id']] += item['count']
-    end
-    # 经营异常
-    AbnormalOperation.data.each do |item|
-      black_lists[item['_id']] ||= 0
-      black_lists[item['_id']] += item['count']
-    end
-
+    blacks = BlackListItem.data.map(&:values).to_h
     punishe_list = AdministrativePunish.data.map(&:values).to_h
     manage_list = AbnormalOperation.data.map(&:values).to_h
     bid_list = BidItem.data.map(&:values).to_h
 
+    black_lists = {}
+    # 黑名单
+    blacks.each do |k, v|
+      black_lists[k] ||= 0
+      black_lists[k] += v
+    end
+    # 行政处罚
+    punishe_list.each do |k, v|
+      black_lists[k] ||= 0
+      black_lists[k] += v
+    end
+    # 经营异常
+    manage_list.each do |k, v|
+      black_lists[k] ||= 0
+      black_lists[k] += v
+    end
+
     @corps.each_with_index do |corp, index|
-      blacklist_count = black_lists[corp.no] || 0
-      punishe_count = punishe_list[corp.no] || 0
-      manage_risk_count = manage_list[corp.no] || 0
+      blacklist_count = black_lists.get(corp.no, 0)
+      black_count = blacks.get(corp.no, 0)
+      punishe_count = punishe_list.get(corp.no, 0)
+      manage_risk_count = manage_list.get(corp.no, 0)
       law_rist_count = corp.doc_count
-      bid_count = bid_list[corp.no] || 0
+      bid_count = bid_list.get(corp.no, 0)
       row = sheet.row(index + 1)
       row.push corp.name
       row.push corp.no
@@ -79,6 +85,7 @@ class CorpsController < ApplicationController
       row.push corp.regcaption
       row.push corp.est_date
       row.push blacklist_count
+      row.push black_count
       row.push punishe_count
       row.push manage_risk_count
       row.push law_rist_count
