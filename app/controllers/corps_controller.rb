@@ -70,12 +70,12 @@ class CorpsController < ApplicationController
     end
 
     @corps.each_with_index do |corp, index|
-      blacklist_count = black_lists.get(corp.no, 0)
-      black_count = blacks.get(corp.no, 0)
-      punishe_count = punishe_list.get(corp.no, 0)
-      manage_risk_count = manage_list.get(corp.no, 0)
+      blacklist_count = black_lists[corp.no] || 0
+      black_count = blacks[corp.no] || 0
+      punishe_count = punishe_list[corp.no] || 0
+      manage_risk_count = manage_list[corp.no] || 0
       law_rist_count = corp.doc_count
-      bid_count = bid_list.get(corp.no, 0)
+      bid_count = bid_list[corp.no] || 0
       row = sheet.row(index + 1)
       row.push corp.name
       row.push corp.no
