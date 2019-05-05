@@ -29,8 +29,7 @@ class CorpsController < ApplicationController
 
     punishe_list = AdministrativePunish.data.map(&:values).to_h
     manage_list = AbnormalOperation.data.map(&:values).to_h
-    bid_list = BidItem.latest_two_years_data.map(&:values).to_h
-    win_bid_list = BidItem.latest_six_months_data.map(&:values).to_h
+    bid_list = BidItem.data.map(&:values).to_h
 
     @blacklist_count = black_lists[@corp.no] || 0
     @punishe_count = punishe_list[@corp.no] || 0
@@ -200,7 +199,7 @@ class CorpsController < ApplicationController
       @corps = @corps.where(doc_count: { '$gt': 20 }) if params[:law]
 
       if params[:bid]
-        @corps.where(no: { '$nin': BidItem.suit_nos })
+        @corps.where(no: { '$in': BidItem.suit_nos })
       end
     end
 end

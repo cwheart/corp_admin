@@ -59,6 +59,7 @@ class BidItem
   end
 
   def self.suit_nos
-    latest_two_years.map {|item| item['_id']} &  latest_six_months.map {|item| item['_id']}
+    # latest_two_years.map {|item| item['_id']} &  latest_six_months.map {|item| item['_id']}
+    data.map(&:values).map(&:first)
   end
 end
