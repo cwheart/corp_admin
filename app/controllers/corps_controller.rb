@@ -194,8 +194,9 @@ class CorpsController < ApplicationController
           black_lists[item['_id']] ||= 0
           black_lists[item['_id']] += item['count']
         end
-        black_lists.select{|k, v| v >= 10 }.keys
-        @corps = @corps.where(no: {'$nin': black_lists.values })
+        nos = black_lists.select{|k, v| v >= 10 }.keys
+        Rails.logger.info(nos)
+        @corps = @corps.where(no: {'$nin': nos })
       end
 
       # 工商经营异常（即经营异常大于0）

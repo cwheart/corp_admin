@@ -1,6 +1,6 @@
 class BlackListItem
   include Mongoid::Document
-  store_in collection: "black_list_item"
+  store_in collection: "black_list"
 
   field :corp_id, type: BSON::ObjectId
   field :corp_no, type: String
