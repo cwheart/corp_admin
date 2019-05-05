@@ -1,21 +1,24 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">企业查询</li>
+  </ol>
+</nav>
+
 <%= form_tag '', method: 'get' do %>
+  <%= hidden_field_tag :form, true %>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">企业资质:</label>
     <div class="col-sm-10">
       <div class="form-check form-check-inline">
-        <%= check_box_tag 'd101a', true, params[:d101a], class: "form-check-input" %>
-        <label class="form-check-label" for="d101a">房建特级</label>
-      </div>
-      <div class="form-check form-check-inline">
         <%= check_box_tag 'd101t', true, params[:d101t], class: "form-check-input" %>
-        <label class="form-check-label" for="d101t">房建一级</label>
+        <label class="form-check-label" for="d101t">房建特级</label>
       </div>
       <div class="form-check form-check-inline">
-        <%= check_box_tag 'd110t', true, params[:d110t], class: "form-check-input" %>
-        <label class="form-check-label" for="d110t">市政特级</label>
+        <%= check_box_tag 'd101a', true, params[:d101a], class: "form-check-input" %>
+        <label class="form-check-label" for="d101a">房建一级</label>
       </div>
       <div class="form-check form-check-inline">
-        <%= check_box_tag 'd110t', true, params[:d110t], class: "form-check-input" %>
+        <%= check_box_tag 'd110a', true, params[:d110a], class: "form-check-input" %>
         <label class="form-check-label" for="d110t">市政一级</label>
       </div>
     </div>
@@ -52,6 +55,13 @@
   </div>
 <% end %>
 
+<div class="row">
+  
+  <div class="col-sm-12 text-right">
+    总记录数: <%= @corps.total_count %>
+  </div>
+</div>
+
 <table class="table">
   <thead>
     <tr>
@@ -68,7 +78,7 @@
   <tbody>
     <% @corps.each_with_index do |corp, index| %>
       <tr id="item_<%= corp.id %>">
-        <td><%= index + 1 %></td>
+        <td><%= (@corps.current_page - 1) * @corps.current_per_page + index + 1 %></td>
         <td><%= link_to corp.name, corp, remote: true %></td>
         <td><%= corp.no %></td>
         <td><%= corp.regcaption.to_i %></td>

@@ -37,7 +37,6 @@ class CorpsController < ApplicationController
     @manage_risk_count = manage_list[@corp.no] || 0
     @law_rist_count = @corp.doc_count
     @bid_count = bid_list[@corp.no] || 0
-    @win_bid_count = win_bid_list[@corp.no] || 0
   end
 
   def export
@@ -64,8 +63,7 @@ class CorpsController < ApplicationController
 
     punishe_list = AdministrativePunish.data.map(&:values).to_h
     manage_list = AbnormalOperation.data.map(&:values).to_h
-    bid_list = BidItem.latest_two_years_data.map(&:values).to_h
-    win_bid_list = BidItem.latest_six_months_data.map(&:values).to_h
+    bid_list = BidItem.data.map(&:values).to_h
 
     @corps.each_with_index do |corp, index|
       blacklist_count = black_lists[corp.no] || 0
@@ -73,7 +71,6 @@ class CorpsController < ApplicationController
       manage_risk_count = manage_list[corp.no] || 0
       law_rist_count = corp.doc_count
       bid_count = bid_list[corp.no] || 0
-      win_bid_count = win_bid_list[corp.no] || 0
       row = sheet.row(index + 1)
       row.push corp.name
       row.push corp.no
@@ -87,7 +84,6 @@ class CorpsController < ApplicationController
       row.push manage_risk_count
       row.push law_rist_count
       row.push bid_count
-      row.push win_bid_count
     end
 
     book.write file_path
@@ -155,13 +151,22 @@ class CorpsController < ApplicationController
     end
 
     def search_crops
+      if params[:form].blank?
+        params[:d101t] = true
+        params[:d101a] = true
+        params[:d110a] = true
+        params[:blacklist] = true
+        params[:manage] = true
+        params[:bid] = true
+        params[:law] = true
+        params[:tax] = true
+      end
       @corps = Corp.all
       scopes = []
       scopes << { d101t: true } if params[:d101t]
       scopes << { d101a: true } if params[:d101a]
-      scopes << { d110t: true } if params[:d110t]
       scopes << { d110a: true } if params[:d110a]
-      scopes = [{no: '123'}] if scopes.blank?
+      scopes = {no: 'unknown'} if scopes.blank?
       @corps = @corps.or(scopes)
 
       if params[:blacklist]

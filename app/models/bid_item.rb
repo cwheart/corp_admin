@@ -9,6 +9,15 @@ class BidItem
   field :title, type: String
   field :channel, type: String
 
+  def self.data
+    begin_time = 6.months.ago
+    pipeline = [
+        {'$match': {'published_at': {'$gt': begin_time} } },
+        {'$group': {'_id': '$corp_no', 'count': {  '$sum': 1 } }},
+    ]
+    BidItem.collection.aggregate(pipeline)
+  end
+
   def self.latest_two_years_data
     begin_time = 2.years.ago
     pipeline = [

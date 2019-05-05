@@ -43,18 +43,12 @@
         <td><%= @corp.phone %></td>
       </tr>
       <tr>
-        <th>黑名单数量</th>
-        <td><%= @blacklist_count %></td>
-        <th>行政处罚</th>
-        <td><%= @punishe_count %></td>
-        <th>经营风险</th>
-        <td><%= @manage_risk_count %></td>
+        <th>黑名单总量</th>
+        <td colspan="5">黑名单: <%= @blacklist_count %>/行政处罚: <%= @punishe_count %>/经营异常: <%= @manage_risk_count %></td>
       </tr>
       <tr>
-        <th>司法风险</th>
+        <th>法院诉讼</th>
         <td><%= @law_rist_count %></td>
-        <th>近两年中标数量</th>
-        <td><%= @win_bid_count %></td>
         <th>半年内招投标数量</th>
         <td><%= @bid_count %></td>
       </tr>
