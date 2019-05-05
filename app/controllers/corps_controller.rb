@@ -197,6 +197,6 @@ class CorpsController < ApplicationController
 
       # 法院诉讼大于20个
       @corps = @corps.where(doc_count: { '$gt': 20 }) if params[:law]
-      @corps = @corps.where(no: { '$in': BidItem.suit_nos }) if params[:bid]
+      @corps = @corps.where(no: { '$nin': BidItem.suit_nos }) if params[:bid]
     end
 end
