@@ -45,7 +45,7 @@ class CorpsController < ApplicationController
     file_path = Rails.root.join('public', 'exports', "export-#{Time.now.to_i}.xls")
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
-    sheet.row(0).concat %w{企业名称 企业统一信用代码 法人 邮箱 电话 注册资本 成立日期 黑名单数量 行政处罚 工商异常数量 法院诉讼数量 近半年投标 近两年中标 纳税额 公司社保缴纳人数}
+    sheet.row(0).concat %w{企业名称 企业统一信用代码 法人 邮箱 电话 注册资本 成立日期 黑名单数量 行政处罚 工商异常数量 严重违法 法院诉讼数量 招投标数据 纳税额 公司社保缴纳人数}
 
     blacks = BlackListItem.data.map(&:values).to_h
     punishe_list = AdministrativePunish.data.map(&:values).to_h
@@ -85,9 +85,9 @@ class CorpsController < ApplicationController
       row.push corp.regcaption
       row.push corp.est_date
       row.push blacklist_count
-      row.push black_count
       row.push punishe_count
       row.push manage_risk_count
+      row.push black_count
       row.push law_rist_count
       row.push bid_count
       row.push '暂无数据'
