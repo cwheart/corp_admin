@@ -11,7 +11,7 @@ class CorpsController < ApplicationController
   # GET /corps/1
   # GET /corps/1.json
   def show
-    blacks = BlackListItem.data.map(&:values).to_h
+    blacks = BreakItem.data.map(&:values).to_h
     punishe_list = AdministrativePunish.data.map(&:values).to_h
     manage_list = AbnormalOperation.data.map(&:values).to_h
     bid_list = BidItem.data.map(&:values).to_h
@@ -47,7 +47,7 @@ class CorpsController < ApplicationController
     sheet = book.create_worksheet
     sheet.row(0).concat %w{企业名称 企业统一信用代码 法人 邮箱 电话 注册资本 成立日期 黑名单数量 行政处罚 工商异常数量 严重违法 法院诉讼数量 招投标数据 纳税额 公司社保缴纳人数}
 
-    blacks = BlackListItem.data.map(&:values).to_h
+    blacks = BreakItem.data.map(&:values).to_h
     punishe_list = AdministrativePunish.data.map(&:values).to_h
     manage_list = AbnormalOperation.data.map(&:values).to_h
     bid_list = BidItem.data.map(&:values).to_h
@@ -180,7 +180,7 @@ class CorpsController < ApplicationController
       if params[:blacklist]
         # 黑名单
         black_lists = {}
-        BlackListItem.data.each do |item|
+        BreakItem.data.each do |item|
           black_lists[item['_id']] ||= 0
           black_lists[item['_id']] += item['count']
         end
