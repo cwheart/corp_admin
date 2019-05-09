@@ -27,7 +27,7 @@
     <div class="col-sm-10">
       <div class="form-check">
         <%= check_box_tag 'blacklist', true, params[:blacklist] %>
-        <label class="form-check-label" for="blacklist">失信黑名单小于10</label>
+        <label class="form-check-label" for="blacklist">失信黑名单(行政处罚、经营异常、严重违法)1-10个</label>
       </div>
       <div class="form-check">
         <%= check_box_tag 'manage', true, params[:manage] %>
@@ -44,6 +44,10 @@
       <div class="form-check">
         <%= check_box_tag 'tax', true, params[:tax] %>
         <label class="form-check-label" for="tax">近两年纳税额小于1000万</label>
+      </div>
+      <div class="form-check">
+        <%= check_box_tag 'shixin', true, params[:shixin] %>
+        <label class="form-check-label" for="shixin">失信信息1-10个</label>
       </div>
     </div>
   </div>

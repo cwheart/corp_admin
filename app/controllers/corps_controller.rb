@@ -168,6 +168,7 @@ class CorpsController < ApplicationController
         params[:bid] = true
         params[:law] = true
         params[:tax] = true
+        params[:shixin] = true
       end
       @corps = Corp.all
       scopes = []
@@ -208,5 +209,10 @@ class CorpsController < ApplicationController
       # 法院诉讼大于20个
       @corps = @corps.where(doc_count: { '$gt': 20 }) if params[:law]
       @corps = @corps.where(no: { '$nin': BidItem.suit_nos }) if params[:bid]
+
+      if params[:shixin]
+        nos = BreakItem.data.select {|item| item['count'] <= 10 }.map { |item| item['_id'] }
+        @corps = @corps.where(no: { '$in': nos})
+      end
     end
 end
