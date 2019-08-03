@@ -5,6 +5,7 @@ class CorpsController < ApplicationController
   # GET /corps
   # GET /corps.json
   def index
+    @provinces = Province.all
     @corps = @corps.page(params[:page]).per(50)
   end
 
@@ -180,6 +181,8 @@ class CorpsController < ApplicationController
       scopes << { d110a: true } if params[:d110a]
       scopes = {no: 'unknown'} if scopes.blank?
       @corps = @corps.or(scopes)
+      @corps = @corps.where(name: /#{params[:corp_name]}/) if params[:corp_name].present?
+      @corps = @corps.where(area: params[:province]) if params[:province].present?
 
       if params[:blacklist]
         # 黑名单
